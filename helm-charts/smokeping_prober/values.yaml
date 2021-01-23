@@ -98,6 +98,6 @@ config:
     telemetryPath: "/metrics"
   extraArgs: []
   hosts:
-    - "4.4.4.4"
-    - "4.4.2.2"
+    - "8.8.8.8"
+    - "8.8.4.4"
     - "1.1.1.1"
