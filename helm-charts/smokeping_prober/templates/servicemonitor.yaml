@@ -6,6 +6,7 @@ metadata:
     {{- include "smokeping-prober.labels" . | nindent 4 }}
 spec:
   selector:
-    {{- include "smokeping-prober.selectorLabels" . | nindent 4 }}
+    matchLabels:
+      {{- include "smokeping-prober.selectorLabels" . | nindent 6 }}
   endpoints:
     - port: http

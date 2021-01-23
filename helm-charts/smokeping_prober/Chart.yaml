@@ -2,5 +2,5 @@ apiVersion: v2
 name: smokeping-prober
 description: A Helm chart for smokeping_prober
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: 0.3.0
