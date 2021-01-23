@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "smokeping-prober.fullname" . }}
+  labels:
+    {{- include "smokeping-prober.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "smokeping-prober.selectorLabels" . | nindent 4 }}
+  endpoints:
+    - port: http

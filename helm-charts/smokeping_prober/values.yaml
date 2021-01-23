@@ -1,0 +1,101 @@
+# Default values for smokeping-prober.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: quay.io/superq/smokeping-prober
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart version.
+  tag: ""
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+  add:
+    # This capability is required by smokeping_prober
+    - NET_RAW
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: None
+  port: 9374
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+serviceMonitor:
+  enabled: false
+
+config:
+  log:
+    level: info
+    format: "logger:stdout?json=true"
+  privileged: false
+  buckets: []
+  # - "5e-05"
+  # - "0.0001"
+  # - "0.0002"
+  # - "0.0004"
+  # - "0.0008"
+  # - "0.0016"
+  # - "0.0032"
+  # - "0.0064"
+  # - "0.0128"
+  # - "0.0256"
+  # - "0.0512"
+  # - "0.1024"
+  # - "0.2048"
+  # - "0.4096"
+  # - "0.8192"
+  # - "1.6384"
+  # - "3.2768"
+  # - "6.5536"
+  # - "13.1072"
+  # - "26.2144"
+  ping:
+    interval: "1s"
+  web:
+    listenAddress: 9374
+    telemetryPath: "/metrics"
+  extraArgs: []
+  hosts: []
+  # - "google.com"
+  # - "1.1.1.1"

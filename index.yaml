@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  smokeping-prober:
+  - apiVersion: v2
+    appVersion: 0.3.0
+    created: "2021-01-23T17:49:24.310347643-05:00"
+    description: A Helm chart for smokeping_prober
+    digest: 27a237cc19de4e9e6ea5e9168ecb3b15dae1a95a50d98589a5780d125104fb3a
+    name: smokeping-prober
+    type: application
+    urls:
+    - https://avanier.github.com/ax-helm-charts/smokeping-prober-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-01-23T17:49:24.309569147-05:00"
