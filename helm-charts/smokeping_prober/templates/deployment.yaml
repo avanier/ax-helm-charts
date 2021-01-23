@@ -31,6 +31,36 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            {{- if .Values.config.web.listenAddress }}
+            - {{ printf "%s=:%d" "--web.listen-address" (int .Values.config.web.listenAddress) | quote }}
+            {{- end }}
+            {{- if .Values.config.web.telemetryPath }}
+            - {{ printf "%s=%s" "--web.telemetry-path" .Values.config.web.telemetryPath | quote }}
+            {{- end }}
+            {{- if .Values.config.buckets }}
+            - {{ printf "%s=%s" "--buckets" (join "," .Values.config.buckets) | quote }}
+            {{- end }}
+            {{- if .Values.config.ping.interval }}
+            - {{ printf "%s=%s" "--ping.interval" .Values.config.ping.interval | quote }}
+            {{- end }}
+            {{- if .Values.config.privileged }}
+            - "--privileged"
+            {{- end }}
+            {{- if .Values.config.log.level }}
+            - {{ printf "%s=%s" "--log.level" .Values.config.log.level | quote }}
+            {{- end }}
+            {{- if .Values.config.log.format }}
+            - {{ printf "%s=%s" "--log.format" .Values.config.log.format | quote }}
+            {{- end }}
+            {{- if .Values.config.extraArgs }}
+            {{- range .Values.config.extraArgs }}
+            - {{ . | quote }}
+            {{- end }}
+            {{- end }}
+            {{- range .Values.config.hosts }}
+            - {{ . | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.config.web.listenAddress }}
