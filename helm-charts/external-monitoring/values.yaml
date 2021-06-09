@@ -1,0 +1,17 @@
+# Default values for external-monitoring.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+external_targets: []
+  # - name: minimum-required-values
+  #   address: 127.0.0.1
+  #   port: 1234
+  # - name: every-value-set
+  #   address: 127.0.0.1
+  #   port: 1234
+  #   interval: 1m
+  #   portName: actual-port-name
+  #   annotations:
+  #     contact-number: 555-555-5555
+  #   labels:
+  #     custom-labels.amonoid.io: fart

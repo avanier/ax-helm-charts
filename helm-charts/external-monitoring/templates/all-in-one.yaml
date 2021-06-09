@@ -1,0 +1,67 @@
+{{- range .Values.external_targets }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .name }}
+{{- if .annotations }}
+  annotations:
+  {{- .annotations | toYaml | trim | nindent 4 }}
+{{- end }}
+  labels:
+      external-monitor: {{ .name }}
+    {{- if .labels }}
+    {{- .labels | toYaml | trim | nindent 4 }}
+    {{- end }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: {{ .portName | default "monitor-port" }}
+      port: {{ int .port }}
+      targetPort: {{ int .port }}
+
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: {{ .name }}
+  labels:
+{{- if .annotations }}
+  annotations:
+  {{- .annotations | toYaml | trim | nindent 4 }}
+{{- end }}
+  labels:
+    app: external-{{ .name }}
+{{- if .labels }}
+  {{- .labels | toYaml | trim | nindent 4 }}
+{{- end }}
+
+subsets:
+  - addresses:
+      - ip: {{ .address }}
+    ports:
+      - name: {{ .portName | default "monitor-port" }}
+        port: {{ int .port }}
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .name }}
+{{- if .annotations }}
+  annotations:
+  {{- .annotations | toYaml | trim | nindent 4 }}
+{{- end }}
+  labels:
+    app.kubernetes.io/name: {{ .name }}
+    {{- if .labels }}
+    {{- .labels | toYaml | trim | nindent 4 }}
+    {{- end }}
+spec:
+  endpoints:
+    - interval: {{ .interval | default "30s" }}
+      port: {{ .portName | default "monitor-port" }}
+  selector:
+    matchLabels:
+      external-monitor: {{ .name }}
+{{- end }}
